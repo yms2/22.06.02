@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        body {background-color: #545454;}
+        ul,li{list-style: none;}
+        a{text-decoration: none;}
+
+        #wrap{width: 100%;}
+
+        #header{
+            width: 100%; height: 120px;
+            position: fixed;top: 0; left: 0;
+            background-color: aqua;
+            z-index: 9999;
+        }
+        #header ul.menu{
+            margin: 0 auto;
+            margin-top: 45px;
+            width: 1000px;height: 30px;
+            border: 1px solid #fff;
+        }
+        #header ul.menu li{
+            width: 333px;
+            height: 30px;
+            float: left;
+            text-align: center;
+            border-right: 1px solid #fff;
+            box-sizing: border-box;
+        }
+        #header ul.menu li:last-child{border-right: 0px;}
+        #header ul.menu li a{display: block; height: 30px; color: white;}
+        #header ul.menu li.on a{color: black;background-color: #fff;}
+        #contents{width: 100%;}
+        #contents > div{
+            margin: 0 auto;
+            width: 1000px;height: 800px;
+            padding-top: 120px;
+        }
+        #contents div#paper{background-color: yellow;}
+        #contents div#works{background-color: rgb(123, 40, 206);}
+        #contents div#email{background-color: rgb(197, 30, 33); height: 1000px;}
+    </style>
+    <script>
+        $(function(){
+            var menu = $('.menu > li')
+            var contents = $('$contents > div')
+            //바디에 있는 클래스안에 있는 li 콘텐츠안에 있는 div를 변수 선언 해준다.
+            
+            //e는 event를 의미
+            menu.click(function(e){
+                event.preventDefault();
+                //preventDefault:해당 이벤트에 대한 사용자 에이전트의 기본 동작을 실행하지 않도록 지정합니다.
+                //클릭하면 기본동작을 하지않고 클릭하면 해야하는 동작을 하게 한다.
+                var tg =$(this)
+                var i = tg.index()
+                //index: 일치하는 요소 중에서 주어진 요소를 검색
+                var section = contents.eq(i)
+                //eq: 선택한 요소의 인덱스 번호에 해당하는 요소를 찾는다.
+                var tt = section.offset().top;
+                //offset: 선택한 요소의 좌표를 가져오거나 특정 좌표로 이동시킨다.
+                $('html, body').animate({scrollTop:tt})
+            })
+
+                $(window).scroll(function(){
+                    var sct = $(window).scrollTop();
+                    //window선택자는 브라우저에 대한 선택자임.
+                    //scroll top 세로로 스크롤
+                    //scroll left 가로로 스크롤
+                    contents.each(function(){
+                    //each: 반복문과 같이 배열이나 객체요소를 검사할 때 사용
+                    var tg = $(this);//each문에 적용된 div
+                    var i = tg.index()//each문에 적용된 div 인덱스값
+                    //스크롤 탑이 있는지 확인하는 조건문
+                    if(tg.offset().top <= sct){
+                        menu.removeClass("on")
+                        menu.eq(i).addClass("on")
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            <ul class="menu">
+                <li class="on"><a href="#">paper</a></li>
+                <li><a href="#">works</a></li>
+                <li><a href="#">email</a></li>
+            </ul>
+        </div>
+        <div id="contents">
+            <div id="paper">paper</div>
+            <div id="works">works</div>
+            <div id="email">email</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title> ToolTip 도움말 효과 </title>
+<script src="../js/jquery.js"></script>
+
+
+<style>
+* {padding:0px; margin:0px;}
+body {
+	margin: 20px auto;
+	padding: 0;	
+	width: 400px;
+	font-size:13px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+p{ line-height:1.5; margin-bottom:5px;}
+
+#tip {
+	position:absolute;
+    width:300px;
+     color:#FFF;
+	 padding:5px;
+	display:none;
+	
+	background:#05184D;
+	               border-radius: 5px;
+               -moz-border-radius: 5px;
+               -webkit-border-radius: 5px;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div>
+<p>
+There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+</p>
+<p>
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a <a href="#" title="There are many variations of passages of Lorem Ipsum available passages of Lorem Ipsum available passages of Lorem Ipsum available passages of ">galley</a> of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+</p>
+<p>
+Contrary to popular belief, <a href="http://www.lipsum.com/" title="img/site.jpg" class="img">Lorem Ipsum</a> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+</p>
+</div> 
+
+
+
+
+<!------------------------ jQuery 코드 ----------------------->
+<script>
+	/*
+	도움말 두가지 넣는데 변수 필요
+	1. 소스가 들어있는 속성값을 담는 변수
+    2. 이미지 또는 텍스트를 구분하는 변수 
+	*/
+var tempTitle;
+var type;
+//두개의 변수를 선언해준다.
+$('a').hover(
+function(){
+tempTitle = $(this).attr('title')
+type = $(this).attr('class')
+
+
+if(type == 'img'){
+	tempImg = '<img src="' + tempTitle +'"width="100" height = "100">'
+}
+
+$('body').append('<div id = "tip"></div>')
+if(type == 'img'){
+	$('#tip').html(tempImg);
+	$("#tip").css("width","100px")
+	//img타입이면 width 100px적용 아니면 
+	//tempTitle에 있는 width100 height100을 적용
+}else{
+	$('#tip').html(tempTitle)
+}
+
+var pageX = $(this).offset().left -20;
+var pageY = $(this).offset().top -$('#tip').innerHeight();
+//offset은 선택한 요소의 좌표를 가져오거나 특정 좌표로 이동시킵니다.
+// pageX와 pageY라고 지정해준다.
+//위치를 잡아준다.
+$('#tip').css({left:pageX+"px", top:pageY+"px"}).fadeIn(2000);
+},
+//tip 스타일에 pageX와 pageY의 크기와 fainIn(천천히 나타나게)넣어준다.
+function(){
+	$("#tip").remove();
+}
+)
+</script>
+
+</body>
+</html>
